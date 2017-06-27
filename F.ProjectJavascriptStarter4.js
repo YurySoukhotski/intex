@@ -118,27 +118,14 @@ function main() {
 				for (var j = 0; j < 9; j++) {
 				content.
 				append("<tr>").
-				append("<br> cheked fileds: ").
-				append((components.get(i) - 3001) * 9 + 3010 + j).
-				append(" and ").
-				append((components.get(i) - 3001) * 9 + 3091 + j).
-				append("<br>");
-
-				content.
 				append("<td> Material type Code: ").
-				append(attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue()).
-				append("</td>");
-
-					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j), null).size() != 0) {
-				content.
+				append(getElement(components.get(i) - 0)).
+				append("</td>").
 				append(" <td> Material name ").
-				append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j),null).get(0).getStringValue()).
-				append("</td>");
-					};
-					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j), null).size() != 0) {
-				content.
+				append(getElement((components.get(i) - 3001) * 9 + 3010 + j)).
+				append("</td>").
 				append("<td> ").
-				append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j),null).get(0).getStringValue().
+				append(getElement((components.get(i) - 3001) * 9 + 3091 + j)).
 				append(" %, Percent in product <br></td>");
 					};
 					
