@@ -100,44 +100,55 @@ function main() {
 			}
 			;
 
-			content.append("<font size='3'><b>Product id = ").append(itemId).append(" with name ").append(item.getName()).append("</b></font><br>");
+			content.
+			append("<font size='3'><b>Product id = ").
+			append(itemId).
+			append(" with name ").
+			append(item.getName()).
+			append("</b></font><br>");
 
 			for (var i = 0; i < components.size(); i++) {
-				content.append("<br> <font size='3'><b>Komponent № ").append(i + 1).append("</b></font><br>").append(getTableHeader());
-				content.append("<table width='500'>");
+				content.
+				append("<br> <font size='3'><b>Komponent № ").
+				append(i + 1).
+				append("</b></font><br>").
+				append(getTableHeader()).
+				append("<table width='500'>");
 								
 				for (var j = 0; j < 9; j++) {
-				  content.
-				  append("<tr>").
-				  append("<br> cheked fileds: ").
-					append((components.get(i) - 3001) * 9 + 3010 + j).
-					append(" and ").
-					append((components.get(i) - 3001) * 9 + 3091 + j).
-					append("<br>");
+				content.
+				append("<tr>").
+				append("<br> cheked fileds: ").
+				append((components.get(i) - 3001) * 9 + 3010 + j).
+				append(" and ").
+				append((components.get(i) - 3001) * 9 + 3091 + j).
+				append("<br>");
 
-					content.
-					append("<td> Material type Code: ").
-					append(attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue()).
-					append("</td>");
+				content.
+				append("<td> Material type Code: ").
+				append(attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue()).
+				append("</td>");
 
 					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j), null).size() != 0) {
-						content.
-						append(" <td> Material name ").
-						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j),null).get(0).getStringValue()).
-						append("</td>");
+				content.
+				append(" <td> Material name ").
+				append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j),null).get(0).getStringValue()).
+				append("</td>");
 					};
 					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j), null).size() != 0) {
-						content.
-						append("<td> ").
-						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j),null).get(0).getStringValue().
-						append(" %, Percent in product <br></td>");
+				content.
+				append("<td> ").
+				append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j),null).get(0).getStringValue().
+				append(" %, Percent in product <br></td>");
 					};
 					
-					content.append("</tr>");
+				content.
+				append("</tr>");
 
 				}
 				
-				content.append("</table><br><hr />");
+				content.
+				append("</table><br><hr />");
 				
 			}
 			;
@@ -146,8 +157,7 @@ function main() {
 
 		} else {
 			content = ERROR_MSG_WRONG_TYPE;
-			logger.error("Item id " + itemId + " is not of type "
-					+ NEEDED_ITEM_TYPE);
+			logger.error("Item id " + itemId + " is not of type "+ NEEDED_ITEM_TYPE);
 		}
 	}
 
@@ -164,6 +174,11 @@ function getElement(id) {
 
 function getTableHeader() {
 	var header = new java.lang.StringBuilder();
-	header.append("<table width='500'><tr><td width='120'><font face='Verdana'><b>Material type</b></td><td width='120'><font face='Verdana'><b>Material name</b></font></td><td width='120'><font face='Verdana'><b>%, in product</b></font></td></tr></table><br><hr/>");
+	header.
+	append("<table width='500'><tr>").
+	append("<td width='120'><font face='Verdana'><b>Material type</b></td>").
+	append("<td width='120'><font face='Verdana'><b>Material name</b></font></td>").
+	append("<td width='120'><font face='Verdana'><b>%, in product</b></font></td>").
+	append("</tr></table><br><hr/>");
 	return header;
 }
