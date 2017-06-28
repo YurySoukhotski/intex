@@ -2,7 +2,7 @@
  * 
  * @author: Yury Soukhotski HTML view material
  * @changes:
- * 28/06 10:25
+ * 28/06 12:25
  */
 
 var startTime = new java.util.Date();
@@ -76,7 +76,7 @@ try {
  */
 function main() {
 	var mainResult = "";
-	var content = "";
+	var content = new java.lang.StringBuilder();
 
 	if (productIdentities) {
 		var itemId = productIdentities[0];
@@ -86,81 +86,72 @@ function main() {
 		if (itemType.equals(NEEDED_ITEM_TYPE)) {
 
 			var components = java.util.ArrayList();
-            var maxLines = 0;
+            
 			/**
 			 * list component with no empty material list
 			 * 
 			 */
-			for (var i = 3001; i <= 3009; i++) {
+			for (var i = ATTRIBUTE_IDENTIFIER_MAT_COMP_START; i < ATTRIBUTE_IDENTIFIER_MAT_COMP_START+ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT; i++) {
 				if (attributeFacade.findAttributeValue(itemId, i, null).size() != 0) {
 					components.add(i);
-				}
-				;
+				};
 
-			}
-			;
+			};
 	
 			for (var i = 0; i < components.size(); i++) {
-				
-                content = content + "<br><table width='800' >";
-				content = content + "<tr><td width='200'><font face='Verdana'>";
-				content = content + "<br><b>Komponente "+ (i + 1) + "</b></font></td>";
-
-				content = content + "<td width='600'>"+getTableHeader();
-
-				content = content + "<table width='600'>";
+				    content.
+				append("<br><table width='800' >").
+				append("<tr><td width='200'><font face='Verdana'>").
+				append("<br><b>Komponente ").
+				append((i+1).toFixed(0)).
+				append("</b></font></td>").
+				append("<td width='600'>").
+				append(getTableHeader()).
+				append("<table width='600'>");
                 
-				for ( var j = 0; j <maxLinesInRow(itemId,components.get(i)); j++) {
+				for ( var j = 0; j < maxLinesInRow(itemId, components.get(i)); j++) {
 					
-					content = content + "<tr>";
-					content = content + "<td width='200'><font face='Verdana'> "
-							+ attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue() + "</font></td>";
+					content.
+				append("<tr><td width='200'><font face='Verdana'>").
+				append(attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue()).
+				append("</font></td>");
 
-					if (attributeFacade.findAttributeValue(itemId,
-							((components.get(i) - 3001) * 9 + 3010 + j), null)
-							.size() != 0) {
-						content = content
-								+ " <td width='200'><font face='Verdana'>  "
-								+ attributeFacade
-										.findAttributeValue(
-												itemId,
-												((components.get(i) - 3001) * 9 + 3010 + j),
-												null).get(0).getStringValue()
-								+ "</font></td>";
+					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j), null).size() != 0) {
+						content.
+						append(" <td width='200'><font face='Verdana'>  ").
+						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j),null).get(0).getStringValue()).
+						append("</font></td>");
 					} else {
-						content = content+ " <td width='200'><font face='Verdana'></font></td>";
+						content.append(" <td width='200'><font face='Verdana'></font></td>");
 						
 					};
-					content = content+ " <td width='50'><font face='Verdana'>  ("+((components.get(i) - 3001) * 9 + 3010 + j)+")</font></td>";
 					
-					if (attributeFacade.findAttributeValue(itemId,
-							((components.get(i) - 3001) * 9 + 3091 + j), null)
-							.size() != 0) {
-						content = content
-								+ "<td width='150'><font face='Verdana'> "
-								+ attributeFacade
-										.findAttributeValue(
-												itemId,
-												((components.get(i) - 3001) * 9 + 3091 + j),
-												null).get(0).getStringValue()
-								+ " % </font></td>";
+					content.
+					append(" <td width='50'><font face='Verdana'>(").
+					append(((components.get(i) - 3001) * 9 + 3010 + j).toFixed(0)).
+					append(")").
+					append("</font></td>");
+					
+					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j), null).size() != 0) {
+						content.
+						append("<td width='150'><font face='Verdana'> ").
+						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j),null).get(0).getStringValue()).
+						append(" % </font></td>");
 					}else {
-						content = content+ " <td width='200'><font face='Verdana'></font></td>";
-						
+						content.append(" <td width='200'><font face='Verdana'></font></td>");
 					};
 
-					content = content + "</tr>";
+					content.append("</tr>");
 
 				};
 
-				content = content + "</table></td></tr></table><br><hr align='center' width='800' color='Red' />";
+				content.append("</table></td></tr></table><br><hr align='center' width='800' color='Red' />");
 
 			};
 			
 		} else {
 			content = ERROR_MSG_WRONG_TYPE;
-			logger.error("Item id " + itemId + " is not of type "
-					+ NEEDED_ITEM_TYPE);
+			logger.error("Item id " + itemId + " is not of type "+ NEEDED_ITEM_TYPE);
 		}
 	}
 
