@@ -37,6 +37,7 @@ var HTML_END = java.lang.String("</body></html>");
 var NEEDED_ITEM_TYPE = "Article";
 var ERROR_MSG_WRONG_TYPE = "<font size=\"5\"><b>Die Ansicht wird nur auf einem Artikel erstellt</b></font>";
 var ERROR_MSG_EMPTY = "<font size=\"5\"><b>Keine Komponenten gepflegt</b></font>";
+var ERROR_MSG_EMPTY_MATERIAL = "<font size=\"5\"><b>Leeres Listenmaterial</b></font>";
 
 var ATTRIBUTE_IDENTIFIER_MAT_COMP_START = 3001;
 var ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT = 9;
@@ -76,8 +77,7 @@ try {
  */
 function main() {
 	var mainResult = "";
-	var content = new java.lang.StringBuilder();
-
+	var content = ERROR_MSG_EMPTY_MATERIAL;
 	if (productIdentities) {
 		var itemId = productIdentities[0];
 		var item = productFacade.findProductById(itemId); // product
@@ -92,63 +92,59 @@ function main() {
 			 * 
 			 */
 			for (var i = ATTRIBUTE_IDENTIFIER_MAT_COMP_START; i < ATTRIBUTE_IDENTIFIER_MAT_COMP_START+ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT; i++) {
-				if (attributeFacade.findAttributeValue(itemId, i, null).size() != 0) {
+				if (getElement(itemId, i)!="") {
 					components.add(i);
 				};
 
 			};
-	
+		if (components.size()>0) {	
+		
+		content = new java.lang.StringBuilder();
 			for (var i = 0; i < components.size(); i++) {
-				    content.
-				append("<br><table width='800' >").
-				append("<tr><td width='200'><font face='Verdana'>").
-				append("<br><b>Komponente ").
-				append((i+1).toFixed(0)).
-				append("</b></font></td>").
-				append("<td width='600'>").
-				append(getTableHeader()).
-				append("<table width='600'>");
+						content.
+					append("<br><table width='800' >").
+					append("<tr><td width='200'><font face='Verdana'>").
+					append("<br><b>Komponente ").
+					append((i+1).toFixed(0)).
+					append("</b></font></td>").
+					append("<td width='600'>").
+					append(getTableHeader()).
+					append("<table width='600'>");
                 
 				for ( var j = 0; j < maxLinesInRow(itemId, components.get(i)); j++) {
 					
-					content.
-				append("<tr><td width='200'><font face='Verdana'>").
-				append(attributeFacade.findAttributeValue(itemId,(components.get(i) - 0), null).get(0).getStringValue()).
-				append("</font></td>");
-
-					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j), null).size() != 0) {
 						content.
-						append(" <td width='200'><font face='Verdana'>  ").
-						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3010 + j),null).get(0).getStringValue()).
-						append("</font></td>");
-					} else {
-						content.append(" <td width='200'><font face='Verdana'></font></td>");
-						
-					};
+					append("<tr><td width='200'><font face='Verdana'>").
+					append(getElement(itemId,(components.get(i) - 0))).
+					append("</font></td>");
+
+						content.
+					append(" <td width='200'><font face='Verdana'>  ").
+					append(getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j))).
+					append("</font></td>");
 					
-					content.
+					
+						content.
 					append(" <td width='50'><font face='Verdana'>(").
-					append(((components.get(i) - 3001) * 9 + 3010 + j).toFixed(0)).
+					append(((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j).toFixed(0)).
 					append(")").
 					append("</font></td>");
 					
-					if (attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j), null).size() != 0) {
 						content.
-						append("<td width='150'><font face='Verdana'> ").
-						append(attributeFacade.findAttributeValue(itemId,((components.get(i) - 3001) * 9 + 3091 + j),null).get(0).getStringValue()).
-						append(" % </font></td>");
-					}else {
-						content.append(" <td width='200'><font face='Verdana'></font></td>");
-					};
-
-					content.append("</tr>");
+					append("<td width='150'><font face='Verdana'> ").
+					append(getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_FRA_START + j))).
+					append(" % </font></td>");
+					
+						content.
+					append("</tr>");
 
 				};
 
-				content.append("</table></td></tr></table><br><hr align='center' width='800' color='Red' />");
+						content.
+					append("</table></td></tr></table><br><hr align='center' width='800' color='Red' />");
 
 			};
-			
+		  }	
 		} else {
 			content = ERROR_MSG_WRONG_TYPE;
 			logger.error("Item id " + itemId + " is not of type "+ NEEDED_ITEM_TYPE);
@@ -159,15 +155,23 @@ function main() {
 
 	return mainResult;
 };
-function getElement() {
-	var elem = "xxx";
+
+function getElement(itemId, id) {
+	var elem = "";
+	    if (attributeFacade.findAttributeValue(itemId, id, null).size() != 0) {
+			elem = attributeFacade.findAttributeValue(itemId,id,null).get(0).getStringValue();
+					};
+	
 	return elem;
 };
 
+/**
+* Function find count lines wich equals count of product material
+*/
 function maxLinesInRow(itemId, identId ) {
 	var count =0;
-		for (var codId=0; codId < 9; codId++){	 
-		  if (attributeFacade.findAttributeValue(itemId,((identId - 3001) * 9 + 3010 + codId), null).size()!=0){
+		for (var codId=0; codId < ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT; codId++){	 
+		  if (attributeFacade.findAttributeValue(itemId,((identId - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + codId), null).size()!=0){
 			  count++;
 		 };
 		};
@@ -179,10 +183,10 @@ function getTableHeader() {
 	var header = new java.lang.StringBuilder();
 	header.
 	append("<table><tr>").
-	append("<td width='200'><font face='Verdana'><b>Material type</b></font></td>").
-	append("<td width='200'><font face='Verdana'><b>Material name</b></font></td>").
+	append("<td width='200'><font face='Verdana'><b>Komponente</b></font></td>").
+	append("<td width='200'><font face='Verdana'><b>Struktur</b></font></td>").
 	append("<td width='50'><font face='Verdana'><b>Code</b></font></td>").
-	append("<td width='150'><font face='Verdana'><b>%, in product</b></font></td>").
+	append("<td width='150'><font face='Verdana'><b>%, Inhalt</b></font></td>").
 	append("</tr></table><br><br>");
 	return header;
 }
