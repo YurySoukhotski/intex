@@ -98,9 +98,9 @@ function main() {
 			  */
 			  
 			  langList.add(6003); 
-			  mandator=logisticsMandatorFacade.findByIdentity(13800);
-			  propertyKomponentList=domainFacade.loadLocalizedDomainValues("PIM2", langList, "3001", mandator);
-			  propertyMaterialList=domainFacade.loadLocalizedDomainValues("PIM2", langList, "3010", mandator);
+			  mandator=logisticsMandatorFacade.findByIdentity(mandatorId);
+			  propertyKomponentList=domainFacade.loadLocalizedDomainValues("PIM2", langList, ATTRIBUTE_IDENTIFIER_MAT_COMP_START, mandator);
+			  propertyMaterialList=domainFacade.loadLocalizedDomainValues("PIM2", langList, ATTRIBUTE_IDENTIFIER_MAT_MAT_START, mandator);
 				
 			/**
 			 * list component with no empty material list
@@ -115,7 +115,8 @@ function main() {
 		if (components.size()>0) {	
 		
 		content = new java.lang.StringBuilder();
-			for (var i = 0; i < components.size(); i++) {
+		
+				for (var i = 0; i < components.size(); i++) {
 						content.
 					append("<br><table width='800' >").
 					append("<tr><td width='200'><font face='Verdana'>").
@@ -130,12 +131,12 @@ function main() {
 					
 						content.
 					append("<tr><td width='200'><font face='Verdana'>").
-					append(findByKey("3001",getElement(itemId,(components.get(i) - 0)),propertyKomponentList)).
+					append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_COMP_START,getElement(itemId,(components.get(i) - 0)),propertyKomponentList)).
 					append("</font></td>");
 
 						content.
 					append(" <td width='200'><font face='Verdana'>  ").
-					append(findByKey("3010",getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j)),propertyMaterialList)).
+					append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_MAT_START,getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j)),propertyMaterialList)).
 					append("</font></td>");
 					
 					
