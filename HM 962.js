@@ -80,7 +80,7 @@ try {
  * See main description
  */
 function main() {
-	var mainResult = "Error";
+	var mainResult = "";
 	var content = ERROR_MSG_EMPTY_MATERIAL;
 	if (productIdentities) {
 		var itemId = productIdentities[0];
@@ -93,8 +93,7 @@ function main() {
 			var langList = java.util.ArrayList();
             var propertyKomponentList =java.util.ArrayList();
 			var propertyMaterialList =java.util.ArrayList();
-				
-				
+			content = new java.lang.StringBuilder(); 
 			
 				
 			  /***************************
@@ -102,7 +101,7 @@ function main() {
 			  */
 			  //  DE, AT, CH, FR, NL, EN  order for language
 			  // German Deutsch-AT Deutsch-CH  Franzosisch-CH English/Master-Data Niederlaendisch
-			  //6003 14053  14051 14050 14054  6000 -en changeв to master data
+			  //6003 14053  14051 14050 14054  6000
 			  
 			  
 			  langList.add(6003); 
@@ -110,15 +109,18 @@ function main() {
 			  langList.add(14051); 
 			  langList.add(14050); 
 			  langList.add(14054); 
-			  langList.add(259340);
-			
-			  var langArr = [6003, 14053,14051,14050,14054,259340];
-			  
+			  langList.add(6000); 
+			 
+			 
 			  mandator=logisticsMandatorFacade.findByIdentity(mandatorId);
 			  propertyKomponentList=domainFacade.loadLocalizedDomainValues("PIM2", langList, ATTRIBUTE_IDENTIFIER_MAT_COMP_START, mandator);
 			  propertyMaterialList=domainFacade.loadLocalizedDomainValues("PIM2", langList, ATTRIBUTE_IDENTIFIER_MAT_MAT_START, mandator);
-			
-			
+			  
+			  for (var i=0 ; i< propertyKomponentList.size(); i++){
+			  content.append("<br>"+propertyKomponentList.get(i).getLanguage().getCountryISO3166Code()).append(" - ").append(propertyKomponentList.get(i).getValue());
+			 }
+			 
+				
 			/**
 			 * list component with no empty material list
 			 * 
@@ -129,60 +131,54 @@ function main() {
 				};
 
 			};
-			
 		if (components.size()>0) {	
-				content = new java.lang.StringBuilder(); 
-		          
-				content.
-					append(getTableHeader())
+			
+			content.append(getTableHeader());
+			  
+					for (var i = 0; i < components.size(); i++) {
+						content.
+					append("<br><table width='750'>");
+                
+				for ( var j = 0; j < maxLinesInRow(itemId, components.get(i)); j++) {
 					
-				for (var l=0; l<langList.size(); l++) {	
-		
-							for (var i = 0; i < components.size(); i++) {
-								    
-									content.
-								append("<table width='750'>");
-							
-											for ( var j = 0; j < maxLinesInRow(itemId, components.get(i)); j++) {
-												
-													content.
-												append("<tr><td width='200'><font face='Verdana'>");
-													if (j==0 ) {
-												content.append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_COMP_START,getElement(itemId,(components.get(i) - 0)),propertyKomponentList, langList.get(l)));
-													} else 
-														{ 
-														content.append(" ");
-													};
-													content.
-												append("</font></td>");
-
-													content.
-												append(" <td width='200'><font face='Verdana'>  ").
-												append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_MAT_START,getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j)),propertyMaterialList, langList.get(l))).
-												append("</font></td>");
-												
-												
-													content.
-												append("<td width='150'><font face='Verdana'> ").
-												append(getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_FRA_START + j))).
-												append(" % </font></td>");
-												
-													content.
-												append("<td width='200'><font face='Verdana'> ").
-												append(languageFacade.findLanguageByIdentity(langArr[l]).getShortName()).
-												append("</font></td>");
-												
-													content.
-												append("</tr>");
-
-											};
-
-									content.
-								append("</table></td></tr><br>");
-
+						content.
+					append("<tr><td width='200'><font face='Verdana'>");
+						if (j==0 ) {
+					content.append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_COMP_START,getElement(itemId,(components.get(i) - 0)),propertyKomponentList);
+						} else 
+							{ 
+							content.append(" ");
 						};
-			content.append("<hr align='center' width='750' /><br>");
+						content.
+					append("</font></td>");
+
+						content.
+					append(" <td width='200'><font face='Verdana'>  ").
+					append(findByKey(ATTRIBUTE_IDENTIFIER_MAT_MAT_START,getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_MAT_START + j)),propertyMaterialList)).
+					append("</font></td>");
+					
+					
+						content.
+					append("<td width='150'><font face='Verdana'> ").
+					append(getElement(itemId,((components.get(i) - ATTRIBUTE_IDENTIFIER_MAT_COMP_START) * ATTRIBUTE_IDENTIFIER_MAT_COMP_COUNT + ATTRIBUTE_IDENTIFIER_MAT_FRA_START + j))).
+					append(" % </font></td>");
+					
+						content.
+					append("<td width='200><font face='Verdana'> ").
+					append(langList.get(0)).
+					append("</font></td>");
+					
+						content.
+					append("</tr>");
+
 				};
+
+						content.append("</table></td></tr><br><br>");
+						content.append("<hr align='center' width='750' />");
+
+				};
+			
+			 
 		  };
 		  
 		
@@ -198,12 +194,12 @@ function main() {
 	return mainResult;
 };
 
-function findByKey(code, key, listArg, lang) {
-	var f = Number(lang).toFixed(0);
+function findByKey(code, key, listArg) {
 	var translate = "";
 	var findArg=ATTRIBUTE_DOMAIN_KEY+code+"."+key;
+	
 	  for (var i=0; i < listArg.size(); i++){
-	   	  if ((listArg.get(i).getKey().equals(findArg))&&(listArg.get(i).getLanguage().getIdentity()==f)){
+	   	  if (listArg.get(i).getKey().equals(findArg)){
 			  return listArg.get(i).getValue();
 			  };
 			};
