@@ -1,0 +1,149 @@
+2017-07-07 11:19:54,909 [ActiveMQ Transport: tcp://vtest17/192.168.0.226:61616@57644] WARN  FailoverTransport - Transport (tcp://192.168.0.226:61616) failed, reason:  java.io.EOFException, attempting to automatically reconnect
+2017-07-07 11:19:55,033 [ActiveMQ Transport: tcp://vtest17/192.168.0.226:61616@57644] ERROR JMSMessageReceiver - CONNECTION ERROR!
+2017-07-07 11:19:55,094 [workflow-xwe-task-scheduler-2] ERROR XWETasksScheduler - org.hibernate.exception.JDBCConnectionException: Could not open connection
+javax.persistence.PersistenceException: org.hibernate.exception.JDBCConnectionException: Could not open connection
+        at org.hibernate.jpa.spi.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1763)
+        at org.hibernate.jpa.spi.AbstractEntityManagerImpl.convert(AbstractEntityManagerImpl.java:1677)
+        at org.hibernate.jpa.internal.QueryImpl.getResultList(QueryImpl.java:458)
+        at org.hibernate.jpa.criteria.compile.CriteriaQueryTypeQueryAdapter.getResultList(CriteriaQueryTypeQueryAdapter.java:67)
+        at com.meylemueller.workflow.dao.impl.XWETaskSchedulerDaoImpl.getScheduledTasksByState(XWETaskSchedulerDaoImpl.java:43)
+        at sun.reflect.GeneratedMethodAccessor2293.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:497)
+        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+        at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+        at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)
+        at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+        at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+        at com.sun.proxy.$Proxy969.getScheduledTasksByState(Unknown Source)
+        at com.meylemueller.workflow.impl.XWETaskSchedulerFacadeImpl.getScheduledTasksByState(XWETaskSchedulerFacadeImpl.java:53)
+        at com.meylemueller.workflow.engine.XWEClientProcessingScheduler.execute(XWEClientProcessingScheduler.java:59)
+        at com.meylemueller.workflow.engine.XWETasksScheduler$2.call(XWETasksScheduler.java:88)
+        at com.meylemueller.workflow.engine.XWETasksScheduler$2.call(XWETasksScheduler.java:84)
+        at com.meylemueller.suite.core.execute.ExecuteTask.call(ExecuteTask.java:54)
+        at com.meylemueller.workflow.engine.XWETasksScheduler.executeInSession(XWETasksScheduler.java:91)
+        at com.meylemueller.workflow.engine.XWETasksScheduler.call(XWETasksScheduler.java:49)
+        at com.meylemueller.workflow.engine.XWETasksScheduler.call(XWETasksScheduler.java:20)
+        at com.meylemueller.suite.core.execute.ExecuteTask.call(ExecuteTask.java:54)
+        at com.meylemueller.suite.core.execute.ExecuteTask.run(ExecuteTask.java:129)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		2017-07-07 14:16:36,343 [http-bio-8070-exec-9] INFO  ClassificationViewActionFacadeImpl - Fins favorite for plugin: 80929902
+2017-07-07 14:16:36,350 [http-bio-8070-exec-9] WARN  UserSettingsFacadeImpl - User setting not found. User login name = 'mm-admin' attribute = 'pim2.favorite.node.80929902'.
+2017-07-07 14:16:36,350 [http-bio-8070-exec-9] INFO  ClassificationViewActionFacadeImpl - Not found favorite for plugin: 80929902
+2017-07-07 14:16:36,554 [http-bio-8070-exec-9] WARN  UserSettingsFacadeImpl - User setting not found. User login name = 'mm-admin' attribute = 'pim2.columns.visibility.configuration.80930060'.
+2017-07-07 14:16:36,554 [http-bio-8070-exec-9] INFO  ClassificationViewActionFacadeImpl - Not found columns visibility configuration for plugin: 80930060
+2017-07-07 14:16:36,557 [http-bio-8070-exec-9] WARN  UserSettingsFacadeImpl - User setting not found. User login name = 'mm-admin' attribute = 'pim2.product.listing.columns.visibility.configuration.80930060'.
+2017-07-07 14:16:36,558 [http-bio-8070-exec-9] INFO  ClassificationViewActionFacadeImpl - Not found columns visibility configuration for plugin: 80930060
+2017-07-07 14:18:47,987 [http-bio-8070-exec-7] INFO  ProcessManager - Start local process com.meylemueller.pim2.process.definition.ProductChangeNotifierProcessDefinition@b7c03af in [null]
+2017-07-07 14:18:47,989 [http-bio-8070-exec-7] INFO  ProcessManager - Execute process 172.16.13.108:E6B0F549-2FE5-40B9-A233-32A3DAA47D9C in pool <default>
+2017-07-07 14:18:53,005 [ActiveMQ Task-1] INFO  FailoverTransport - Successfully connected to tcp://ap-omn-heine-pim-xwe-wrk-t:61616
+2017-07-07 14:18:59,687 [process-manager-pool-<default>-17] INFO  ProcessManager - Remove process 172.16.13.108:E6B0F549-2FE5-40B9-A233-32A3DAA47D9C
+2017-07-07 14:19:12,537 [http-bio-8070-exec-9] INFO  ProcessManager - Start local process com.meylemueller.pim2.process.definition.ProductChangeNotifierProcessDefinition@27fe8158 in [null]
+2017-07-07 14:19:12,537 [http-bio-8070-exec-9] INFO  ProcessManager - Execute process 172.16.13.108:99BE4F72-1A39-46C5-8D2C-C7B8600ED60B in pool <default>
+2017-07-07 14:19:12,545 [ActiveMQ Task-1] INFO  FailoverTransport - Successfully connected to tcp://ap-omn-heine-pim-xwe-wrk-t:61616
+2017-07-07 14:19:12,976 [process-manager-pool-<default>-18] INFO  ProcessManager - Remove process 172.16.13.108:99BE4F72-1A39-46C5-8D2C-C7B8600ED60B
+2017-07-07 14:19:27,450 [http-bio-8070-exec-5] ERROR IBackendJMSMessageBrokerFacade -
+java.lang.NullPointerException
+        at com.meylemueller.suite.core.jmsmessagebroker.JMSMessageReceiver.instantiateProcesser(JMSMessageReceiver.java:193)
+        at com.meylemueller.suite.core.jmsmessagebroker.JMSMessageReceiver.connectProcesserToQueue(JMSMessageReceiver.java:181)
+        at com.meylemueller.isy3.backend.client.flex.facade.BackendJMSMessageBrokerFacade.manageListening(BackendJMSMessageBrokerFacade.java:208)
+        at com.meylemueller.isy3.backend.client.flex.facade.BackendJMSMessageBrokerFacade.manageListening(BackendJMSMessageBrokerFacade.java:164)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:173)
+        at org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor.invoke(ThrowsAdviceInterceptor.java:125)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+        at org.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor.invoke(MethodBeforeAdviceInterceptor.java:52)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:168)
+        at org.springframework.aop.framework.adapter.ThrowsAdviceInterceptor.invoke(ThrowsAdviceInterceptor.java:125)
+        at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+        at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+        at com.sun.proxy.$Proxy851.manageListening(Unknown Source)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at flex.messaging.services.remoting.adapters.JavaAdapter.invoke(JavaAdapter.java:418)
+        at flex.messaging.services.RemotingService.serviceMessage(RemotingService.java:183)
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	ложится листенер 
+	из за того что скрипт не может найти продукт !!!!!!!!!!!!!!!!!
+	---------------------------------------------
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		017-07-07 15:11:42,240 [http-bio-8070-exec-8] INFO  ProcessManager - Start local process com.meylemueller.pim2.process.definition.ProductChangeNotifierProcessDefinition@181aa410 in [null]
+2017-07-07 15:11:42,241 [http-bio-8070-exec-8] INFO  ProcessManager - Execute process 172.16.13.108:4F48EDA3-951D-4390-AE17-270F9BADEECA in pool <default>
+2017-07-07 15:11:42,256 [ActiveMQ Task-1] INFO  FailoverTransport - Successfully connected to tcp://ap-omn-heine-pim-xwe-wrk-t:61616
+2017-07-07 15:11:44,674 [process-manager-pool-<default>-28] INFO  ProcessManager - Remove process 172.16.13.108:4F48EDA3-951D-4390-AE17-270F9BADEECA
+2017-07-07 15:11:45,292 [ActiveMQ Session Task-6] ERROR JSJmsProcesser - Error occurred while executing js function
+org.mozilla.javascript.WrappedException: Wrapped com.meylemueller.common.util.exception.FinderException: Product with name '104' does not exist. (JSJmsProcesserFunction#106)
+        at org.mozilla.javascript.Context.throwAsScriptRuntimeEx(Context.java:1773)
+        at org.mozilla.javascript.MemberBox.invoke(MemberBox.java:183)
+        at org.mozilla.javascript.NativeJavaMethod.call(NativeJavaMethod.java:247)
+        at org.mozilla.javascript.optimizer.OptRuntime.call1(OptRuntime.java:66)
+        at org.mozilla.javascript.gen.c6._c3(JSJmsProcesserFunction:106)
+        at org.mozilla.javascript.gen.c6.call(JSJmsProcesserFunction)
+        at org.mozilla.javascript.optimizer.OptRuntime.callName(OptRuntime.java:97)
+        at org.mozilla.javascript.gen.c6._c0(JSJmsProcesserFunction:154)
+        at org.mozilla.javascript.gen.c6.call(JSJmsProcesserFunction)
+        at org.mozilla.javascript.ContextFactory.doTopCall(ContextFactory.java:398)
+        at org.mozilla.javascript.ScriptRuntime.doTopCall(ScriptRuntime.java:3065)
+        at org.mozilla.javascript.gen.c6.call(JSJmsProcesserFunction)
+        at com.meylemueller.suite.core.script.js.task.RunJavaScriptFunctionTask.executeJavaScript(RunJavaScriptFunctionTask.java:38)
+        at com.meylemueller.suite.core.script.js.task.BaseJavaScriptTask.call(BaseJavaScriptTask.java:36)
+        at com.meylemueller.suite.core.script.js.JavaScriptFacade.executeFunction(JavaScriptFacade.java:116)
+        at com.meylemueller.suite.core.script.js.JavaScriptFacade.executeFunction(JavaScriptFacade.java:100)
+        at com.meylemueller.suite.core.jmsmessagebroker.processers.JSJmsProcesser$1.call(JSJmsProcesser.java:68)
+        at com.meylemueller.suite.core.jmsmessagebroker.processers.JSJmsProcesser$1.call(JSJmsProcesser.java:58)
+        at com.meylemueller.suite.core.execute.ExecuteTask.call(ExecuteTask.java:54)
+        at com.meylemueller.suite.core.jmsmessagebroker.processers.JSJmsProcesser.processMessage(JSJmsProcesser.java:80)
+        at com.meylemueller.suite.core.jmsmessagebroker.AbstractMessageProcesser.processMessage(AbstractMessageProcesser.java:123)
+        at com.meylemueller.suite.core.jmsmessagebroker.AbstractMessageProcesser.onMessage(AbstractMessageProcesser.java:96)
+        at org.apache.activemq.ActiveMQMessageConsumer.dispatch(ActiveMQMessageConsumer.java:1321)
+        at org.apache.activemq.ActiveMQSessionExecutor.dispatch(ActiveMQSessionExecutor.java:131)
+        at org.apache.activemq.ActiveMQSessionExecutor.iterate(ActiveMQSessionExecutor.java:202)

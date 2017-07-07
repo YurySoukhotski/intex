@@ -5,9 +5,9 @@
  * This script will be executed on pim2 product creation.
  * It will set the user and the current date to pim2 attributes
  *
+ * 
  *
- *
- *
+ * 
  */
 
 
@@ -98,56 +98,56 @@ function processMessage(objectMessage, entryFacade) {
     };
 
 // process item identifier
-    var processProduct = function (productIdentifier, userName) {
-        logger.info("Product " + productIdentifier + " will be processed");
+var processProduct = function (productIdentifier, userName) {
+logger.info("Product " + productIdentifier + " will be processed");
 
-        var groupedProductsForUpdate = new java.util.HashMap();
-        var updatedValues = new java.util.ArrayList();
+var groupedProductsForUpdate = new java.util.HashMap();
+var updatedValues = new java.util.ArrayList();
 
 // Get current date
-        var currentDate = new java.util.Date();
-        var dateAsTimestampInMilli = currentDate.getTime();
+var currentDate = new java.util.Date();
+var dateAsTimestampInMilli = currentDate.getTime();
 
 // Set date and username to product
 
-        logger.info("Set user=" + userName + " and date=" + dateAsTimestampInMilli);
+logger.info("Set user=" + userName + " and date=" + dateAsTimestampInMilli);
 
 
 
 // Cheking Classification, Find root node
 
-        var itemId=productFacade.findProductIdByName(productIdentifier);
-        logger.info("find Product id:  " + itemId);
-        var neuQuery = "WITH rec(ID, PARENT_ID) AS (SELECT ID, parent_id FROM PIM2_PRODUCT WHERE id ="+ itemId+" UNION ALL SELECT rec1.ID, rec1.parent_id FROM PIM2_PRODUCT rec1, rec WHERE rec1.id =rec.PARENT_ID) SELECT ID FROM rec where PARENT_ID is null";
-        logger.info("find Root Product:  " + neuQuery);
+var itemId=productFacade.findProductIdByName(productIdentifier);
+logger.info("find Product id:  " + itemId);
+var neuQuery = "WITH rec(ID, PARENT_ID) AS (SELECT ID, parent_id FROM PIM2_PRODUCT WHERE id ="+ itemId+" UNION ALL SELECT rec1.ID, rec1.parent_id FROM PIM2_PRODUCT rec1, rec WHERE rec1.id =rec.PARENT_ID) SELECT ID FROM rec where PARENT_ID is null";
+logger.info("find Root Product:  " + neuQuery);
 
-        var neuSQLquery = entryFacade.getOpenedSession().createSQLQuery(neuQuery);
-        var list = neuSQLquery.list();
+var neuSQLquery = entryFacade.getOpenedSession().createSQLQuery(neuQuery);
+var list = neuSQLquery.list();
 
-        logger.warn("Root Product finded : id of node to find - " + list.size()+ " -- " + list.get(0));
+logger.warn("Root Product finded : id of node to find - " + list.size()+ " -- " + list.get(0));
 
-        var findRootQuery = "WITH rec(id, identifier, parent_id) AS (SELECT id, identifier, parent_id FROM pim2_node WHERE id IN (SELECT node_id FROM pim2_product_2_node WHERE product_id ="+ list.get(0)+") UNION ALL SELECT rec1.id, rec1.identifier, rec1.parent_id FROM pim2_node rec1, rec WHERE rec1.id=rec.parent_id) SELECT identifier FROM rec where parent_id is null";
-        logger.info("find Root clasificator:  " + findRootQuery);
-        neuSQLquery = entryFacade.getOpenedSession().createSQLQuery(findRootQuery);
-        var list = neuSQLquery.list();
+var findRootQuery = "WITH rec(id, identifier, parent_id) AS (SELECT id, identifier, parent_id FROM pim2_node WHERE id IN (SELECT node_id FROM pim2_product_2_node WHERE product_id ="+ list.get(0)+") UNION ALL SELECT rec1.id, rec1.identifier, rec1.parent_id FROM pim2_node rec1, rec WHERE rec1.id=rec.parent_id) SELECT identifier FROM rec where parent_id is null";
+logger.info("find Root clasificator:  " + findRootQuery);
+neuSQLquery = entryFacade.getOpenedSession().createSQLQuery(findRootQuery);
+var list = neuSQLquery.list();
 
-        logger.warn("Root Klasificator finded - " + list.size()+ " - "+  list.get(0));
-        if (list.get(0).equals("03 - PIM-Klassifikationen")){
-            updatedValues.add(createAttributeValueVO("90100", "product", null));
-            logger.info("Set product");
-        } else {
-            updatedValues.add(createAttributeValueVO("90100", "outfit", null));
-            logger.info("Set outfit");
-        };
+logger.warn("Root Klasificator finded - " + list.size()+ " - "+  list.get(0));
+if (list.get(0).equals("03 - PIM-Klassifikationen")){
+updatedValues.add(createAttributeValueVO("90100", "product", null));
+logger.info("Set product");
+} else {
+updatedValues.add(createAttributeValueVO("90100", "outfit", null));
+logger.info("Set outfit");
+};
 
 
 
 
 
 // save release status attributes using pim2 API
-        groupedProductsForUpdate.put(new Packages.com.meylemueller.pim2.identity.ItemIdentity(productIdentifier), updatedValues);
-        pim2ApiFacade.updateItems(groupedProductsForUpdate);
-    };
+groupedProductsForUpdate.put(new Packages.com.meylemueller.pim2.identity.ItemIdentity(productIdentifier), updatedValues);
+pim2ApiFacade.updateItems(groupedProductsForUpdate);
+};
 
 // ENTRYPOINT
     logger.info("Start js on create for message " + objectMessage.getObject());
